@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StockVision — AI Stock Market Prediction</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(58,12,163,0.22), rgba(10,10,20,1) 60%),
+        radial-gradient(circle at bottom right, rgba(0,212,255,0.12), rgba(10,10,20,1) 70%);
+      color:#e5e7eb;
+    }
+    .glass{
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border-radius:14px;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg,#7c3aed,#06b6d4);
+      padding:.75rem 1.3rem;
+      border-radius:999px;
+      font-weight:600;
+      color:white;
+    }
+    .btn-ghost{
+      background: rgba(255,255,255,0.08);
+      padding:.75rem 1.3rem;
+      border-radius:999px;
+      color:white;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-gradient-to-r from-[#0b0f1a] to-[#0a0d16] border-b border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center gap-6">
+
+    <div class="flex items-center gap-3">
+      <div class="p-2 rounded-md bg-white/10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M3 13h4v8H3zM9 3h4v18H9zM15 8h6v13h-6z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="text-lg font-semibold text-white">StockVision</div>
+        <div class="text-xs text-gray-400">AI Stock Predictor</div>
+      </div>
+    </div>
+
+    <nav class="ml-auto hidden md:flex gap-6 text-sm text-gray-300">
+      <a class="hover:text-white">Features</a>
+      <a class="hover:text-white">How it Works</a>
+      <a class="hover:text-white">About</a>
+    </nav>
+
+    <a href="dashboard.html" class="btn-primary ml-4">Go to Dashboard</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="max-w-[1200px] mx-auto px-6 py-24 text-center">
+  <h1 class="text-5xl font-extrabold leading-tight">
+    AI-Powered Stock Market <span class="text-purple-400">Prediction</span>
+  </h1>
+  <p class="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
+    Predict stock trends smarter using machine learning, real-time data
+    and intelligent market insights — all in one dashboard.
+  </p>
+
+  <div class="mt-10 flex justify-center gap-4">
+    <a href="dashboard.html" class="btn-primary">Get Started</a>
+    <a href="#features" class="btn-ghost">Learn More</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="max-w-[1200px] mx-auto px-6 py-20">
+  <h2 class="text-3xl font-bold text-center mb-12">Powerful Features</h2>
+
+  <div class="grid md:grid-cols-4 gap-6">
+
+    <div class="glass p-6">
+      <h3 class="font-semibold text-lg">📊 AI Prediction</h3>
+      <p class="mt-3 text-sm text-gray-400 leading-relaxed">
+        Uses machine learning algorithms to analyze historical stock prices.
+        Identifies hidden patterns and trends from past market behavior.
+        Predicts future price movements with data-driven accuracy.
+        Reduces emotional and human bias in decision-making.
+        Helps users understand market direction clearly.
+        Supports smarter and more confident investment planning.
+      </p>
+    </div>
+
+    <div class="glass p-6">
+      <h3 class="font-semibold text-lg">📈 Interactive Charts</h3>
+      <p class="mt-3 text-sm text-gray-400 leading-relaxed">
+        Displays stock prices using dynamic and interactive charts.
+        Helps users visualize trends, patterns, and fluctuations easily.
+        Makes complex market data simple and understandable.
+        Allows better comparison of historical and predicted prices.
+        Improves clarity for analysis and learning.
+        Enhances overall user experience.
+      </p>
+    </div>
+
+    <div class="glass p-6">
+      <h3 class="font-semibold text-lg">🧠 Smart Insights</h3>
+      <p class="mt-3 text-sm text-gray-400 leading-relaxed">
+        Provides AI-based insights like bullish or bearish trends.
+        Analyzes momentum and volatility indicators.
+        Converts raw data into meaningful summaries.
+        Helps users understand prediction reasoning.
+        Supports informed trading decisions.
+        Acts as a virtual market assistant.
+      </p>
+    </div>
+
+    <div class="glass p-6">
+      <h3 class="font-semibold text-lg">🔒 Secure & Fast</h3>
+      <p class="mt-3 text-sm text-gray-400 leading-relaxed">
+        Built with a modern and responsive UI framework.
+        Ensures fast performance across devices.
+        Designed with security best practices in mind.
+        Prevents unauthorized access to dashboards.
+        Provides smooth and stable user experience.
+        Reliable for continuous usage.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="max-w-[1000px] mx-auto px-6 py-20 text-center">
+  <h2 class="text-3xl font-bold mb-10">How It Works</h2>
+
+  <div class="grid md:grid-cols-3 gap-8">
+
+    <div class="glass p-6">
+      <h3 class="font-semibold">🔍 Step 1: Select a Stock</h3>
+      <p class="text-sm text-gray-400 mt-3 leading-relaxed">
+        The user searches for a stock using its ticker symbol or company name.
+        This input helps the system identify the correct stock data.
+        Stock selection acts as the foundation for analysis.
+        Users can choose stocks based on interest.
+        Ensures flexibility and ease of use.
+        Starts the prediction workflow.
+      </p>
+    </div>
+
+    <div class="glass p-6">
+      <h3 class="font-semibold">🤖 Step 2: AI Model Analysis</h3>
+      <p class="text-sm text-gray-400 mt-3 leading-relaxed">
+        The AI model processes historical market data.
+        Identifies trends, patterns, and price behavior.
+        Uses machine learning algorithms for analysis.
+        Removes emotional bias from predictions.
+        Calculates probable future price movement.
+        Acts as the intelligence engine.
+      </p>
+    </div>
+
+    <div class="glass p-6">
+      <h3 class="font-semibold">📊 Step 3: View Prediction & Insights</h3>
+      <p class="text-sm text-gray-400 mt-3 leading-relaxed">
+        Displays predicted prices and trend direction.
+        Shows insights like bullish or bearish signals.
+        Helps users understand market behavior.
+        Presents results in an easy-to-read format.
+        Supports decision-making and learning.
+        Completes the prediction cycle.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-6 text-center text-sm text-gray-500">
+  © 2025 StockVision — AI Stock Prediction Platform
+</footer>
+
+</body>
+</html>
