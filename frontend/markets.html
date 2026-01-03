@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StockVision — Markets</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0b0f1a] text-gray-200">
+
+<!-- TOP NAV -->
+<header class="bg-black border-b border-gray-800 p-4 flex items-center gap-4">
+  <h1 class="text-xl font-bold text-green-400">StockVision</h1>
+  <nav class="flex gap-6 text-sm">
+    <a href="news.html">News</a>
+    <a href="market.html" class="text-green-400 font-semibold">Markets</a>
+    <a href="research.html">Research</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+</header>
+
+<!-- MAIN GRID -->
+<div class="grid grid-cols-12">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="col-span-2 bg-[#0f172a] min-h-screen p-4 text-sm space-y-3">
+    <p class="text-gray-400 uppercase text-xs">Overview</p>
+    <p class="text-green-400">World Indices</p>
+    <p>Futures</p>
+    <p>Bonds</p>
+    <p>Currencies</p>
+    <p>Crypto</p>
+    <p>ETFs</p>
+  </aside>
+
+  <!-- CENTER CONTENT -->
+  <main class="col-span-8 p-6 space-y-10">
+
+    <h2 class="text-2xl font-bold">Markets Overview</h2>
+
+    <!-- WORLD INDICES -->
+    <div class="grid grid-cols-3 gap-6">
+
+      <!-- AMERICAS -->
+      <div>
+        <h3 class="font-semibold mb-2">Americas</h3>
+        <table class="w-full text-sm">
+          <tr class="border-b border-gray-700"><td>Dow Jones</td><td>48,731.16</td><td class="text-green-400">+0.60%</td></tr>
+          <tr class="border-b border-gray-700"><td>S&P 500</td><td>6,932.05</td><td class="text-green-400">+0.32%</td></tr>
+          <tr class="border-b border-gray-700"><td>Nasdaq</td><td>23,613.31</td><td class="text-green-400">+0.22%</td></tr>
+          <tr><td>VIX</td><td>13.47</td><td class="text-gray-400">0.00%</td></tr>
+        </table>
+      </div>
+
+      <!-- EUROPE -->
+      <div>
+        <h3 class="font-semibold mb-2">Europe</h3>
+        <table class="w-full text-sm">
+          <tr class="border-b border-gray-700"><td>DAX</td><td>24,340.06</td><td class="text-green-400">+0.23%</td></tr>
+          <tr class="border-b border-gray-700"><td>CAC 40</td><td>8,103.58</td><td class="text-red-400">-0.10%</td></tr>
+          <tr><td>FTSE 100</td><td>9,870.68</td><td class="text-red-400">-0.19%</td></tr>
+        </table>
+      </div>
+
+      <!-- ASIA -->
+      <div>
+        <h3 class="font-semibold mb-2">Asia</h3>
+        <table class="w-full text-sm">
+          <tr class="border-b border-gray-700"><td>Nikkei 225</td><td>50,407.79</td><td class="text-green-400">+0.45%</td></tr>
+          <tr class="border-b border-gray-700"><td>Hang Seng</td><td>25,818.93</td><td class="text-green-400">+0.38%</td></tr>
+          <tr><td>S&P BSE</td><td>85,408.70</td><td class="text-red-400">-0.12%</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- GLOBAL MARKET STATUS -->
+    <section class="bg-[#0f172a] p-5 rounded-xl">
+      <div class="grid grid-cols-4 text-sm">
+        <div><p class="text-gray-400">Global Trend</p><p class="text-green-400 font-semibold">Bullish</p></div>
+        <div><p class="text-gray-400">Volatility</p><p class="text-yellow-400 font-semibold">Moderate</p></div>
+        <div><p class="text-gray-400">Market Breadth</p><p class="text-green-400 font-semibold">Positive</p></div>
+        <div><p class="text-gray-400">AI Confidence</p><p class="text-green-400 font-semibold">78%</p></div>
+      </div>
+    </section>
+
+    <!-- FUTURES -->
+    <section>
+      <h3 class="text-lg font-semibold mb-3">Futures</h3>
+      <table class="w-full text-sm">
+        <tr class="border-b border-gray-700"><td>S&P 500 Futures</td><td>6,945.50</td><td class="text-green-400">+0.18%</td></tr>
+        <tr class="border-b border-gray-700"><td>Dow Futures</td><td>48,820</td><td class="text-green-400">+0.21%</td></tr>
+        <tr><td>Nasdaq Futures</td><td>23,690</td><td class="text-red-400">-0.09%</td></tr>
+      </table>
+    </section>
+
+    <!-- SECTORS -->
+    <section>
+      <h3 class="text-lg font-semibold mb-3">Sector Performance</h3>
+      <table class="w-full text-sm">
+        <tr class="border-b border-gray-700"><td>Information Technology</td><td class="text-green-400">+1.42%</td><td>Strong</td></tr>
+        <tr class="border-b border-gray-700"><td>Banking</td><td class="text-red-400">-0.68%</td><td>Weak</td></tr>
+        <tr class="border-b border-gray-700"><td>Pharmaceuticals</td><td class="text-green-400">+0.54%</td><td>Stable</td></tr>
+        <tr><td>Energy</td><td class="text-yellow-400">+0.08%</td><td>Sideways</td></tr>
+      </table>
+    </section>
+
+    <!-- CURRENCIES & COMMODITIES -->
+    <section class="grid grid-cols-2 gap-6">
+      <div>
+        <h3 class="text-lg font-semibold mb-3">Currencies</h3>
+        <table class="w-full text-sm">
+          <tr class="border-b border-gray-700"><td>USD/INR</td><td>83.12</td><td class="text-green-400">+0.05%</td></tr>
+          <tr><td>EUR/USD</td><td>1.094</td><td class="text-red-400">-0.02%</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-3">Commodities</h3>
+        <table class="w-full text-sm">
+          <tr class="border-b border-gray-700"><td>Gold</td><td>$4,502.80</td><td class="text-red-400">-0.06%</td></tr>
+          <tr><td>Crude Oil</td><td>$78.42</td><td class="text-green-400">+0.44%</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- AI OUTLOOK -->
+    <section class="bg-gradient-to-r from-indigo-900 to-purple-900 p-6 rounded-2xl">
+      <h3 class="text-xl font-bold mb-2">AI Market Outlook</h3>
+      <p class="text-gray-200">
+        AI analysis of global indices, futures momentum, and sector rotation
+        indicates a bullish bias with controlled volatility. Technology and
+        large-cap stocks are expected to outperform in the near term.
+      </p>
+      <p class="mt-3 text-sm">Prediction Confidence: <span class="text-green-400 font-semibold">0.78</span></p>
+    </section>
+
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="col-span-2 bg-[#0f172a] p-4">
+    <h3 class="text-sm font-semibold mb-3">U.S. Market Snapshot</h3>
+    <div class="bg-black p-3 rounded mb-3"><p class="text-xs text-gray-400">S&P 500</p><p class="text-green-400">+22.26 (+0.32%)</p></div>
+    <div class="bg-black p-3 rounded mb-3"><p class="text-xs text-gray-400">Dow Jones</p><p class="text-green-400">+288.75 (+0.60%)</p></div>
+    <div class="bg-black p-3 rounded"><p class="text-xs text-gray-400">Nasdaq</p><p class="text-green-400">+51.46 (+0.22%)</p></div>
+  </aside>
+
+</div>
+</body>
+</html>
