@@ -1,0 +1,112 @@
+/* Background same as dashboard */
+body{
+  margin:0;
+  padding:0;
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(58,12,163,.22), rgba(10,10,20,1) 60%),
+    radial-gradient(circle at bottom right, rgba(0,212,255,.12), rgba(10,10,20,1) 70%);
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* Glass card */
+.card{
+  width:380px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  animation:fadeIn .8s ease;
+}
+
+/* Header Logo & Text */
+.header{
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.header img{
+  width:60px;
+  margin-bottom:6px;
+}
+
+.brand-title{
+  font-size:22px;
+  font-weight:700;
+  color:white;
+}
+
+.brand-tagline{
+  font-size:13px;
+  opacity:.8;
+}
+
+/* Inputs */
+input,select{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,.12);
+  color:white;
+  margin-top:10px;
+  outline:none;
+}
+
+input::placeholder{
+  color:#9ca3af;
+}
+
+.row{display:flex;gap:8px}
+
+/* Gradient Buttons */
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#7c3aed,#06b6d4);
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:600;
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 20px rgba(124,58,237,.3);
+}
+
+/* Links */
+.link{
+  text-align:center;
+  margin-top:12px;
+}
+
+.link a{
+  color:#67e8f9;
+  text-decoration:none;
+}
+
+.link a:hover{
+  text-decoration:underline;
+}
+
+/* Messages */
+#msg{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}

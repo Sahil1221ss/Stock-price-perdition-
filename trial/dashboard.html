@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StockVision — AI Pro Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(58,12,163,.22), rgba(10,10,20,1) 60%),
+    radial-gradient(circle at bottom right, rgba(0,212,255,.12), rgba(10,10,20,1) 70%);
+  color:#e5e7eb;
+}
+.glass{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+.accent{
+  background:linear-gradient(90deg,#7c3aed,#06b6d4);
+}
+.btn-accent{
+  background:linear-gradient(90deg,#7c3aed,#06b6d4);
+  color:white;
+  font-weight:600;
+  padding:.65rem 1rem;
+  border-radius:10px;
+  text-align:center;
+  display:inline-block;
+  transition:.2s;
+}
+.btn-accent:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 20px rgba(124,58,237,.3);
+}
+</style>
+</head>
+
+<body>
+  <h2 id="welcome" class="text-xl font-semibold text-white"></h2>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const sb = supabase.createClient(
+  "https://txatycglzttpaafymdzq.supabase.co",
+  "sb_publishable_bCGpyG5csL97ZWMw7K3u-w_QzqwS7jZ"
+);
+
+async function protectPage(){
+
+  // check session
+  const { data } = await sb.auth.getUser();
+
+  // if NO USER → force login page
+  if(!data.user){
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Fetch username
+  const { data: profile } = await sb
+    .from("profiles")
+    .select("username")
+    .eq("id", data.user.id)
+    .single();
+
+  // Show greeting
+  document.getElementById("welcome").innerText =
+    "Welcome, " + (profile?.username || "User") + " 👋";
+}
+
+// Logout
+async function logout(){
+  await sb.auth.signOut();
+  window.location.href = "login.html";
+}
+
+protectPage();
+</script>
+
+
+<!-- YAHOO FINANCE STYLE HEADER -->
+<header class="sticky top-0 z-50 bg-[#0f172a] border-b border-white/5">
+  <div class="max-w-[1600px] mx-auto px-6 h-14 flex items-center justify-between gap-6">
+
+    <!-- LEFT: LOGO + NAV -->
+    <div class="flex items-center gap-8 shrink-0">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-md bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center text-white font-bold">
+          SV
+        </div>
+        <span class="text-white font-semibold text-lg">StockVision</span>
+      </div>
+
+     <!-- Nav -->
+<nav class="hidden lg:flex items-center gap-6 text-sm text-gray-300">
+  <a href="dashboard.html" class="hover:text-white">My Portfolio</a>
+  <a href="news.html" class="hover:text-white">News</a>
+  <a href="markets.html" class="hover:text-white font-semibold text-white">Markets</a>
+  <a href="research.html" class="hover:text-white">Research</a>
+  <a href="Personal Finance.html" class="hover:text-white">Personal Finance</a>
+  <a href="videos.html" class="hover:text-white">Videos</a>
+  <a href="sports.html" class="hover:text-white">Sports</a>
+</nav>
+
+    <!-- CENTER: SEARCH -->
+    <div class="flex-1 flex justify-center">
+      <div class="relative w-full max-w-xl">
+        <input
+          type="text"
+          placeholder="Search for news, tickers or companies"
+          class="w-full h-9 pl-4 pr-12 rounded-full bg-[#1f2937] text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+        <button class="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 rounded-full bg-green-500 flex items-center justify-center">
+          🔍
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT: ACTIONS -->
+    <div class="flex items-center gap-5 shrink-0 text-gray-300 text-sm">
+      <a href="news.html" class="hover:text-white">News</a>
+      <a href="#" class="hover:text-white font-semibold text-cyan-400">Finance</a>
+      <a href="Watch.html" class="hover:text-white">Watch</a>
+
+      <!-- Icons -->
+      <button class="hover:text-white">🔔</button>
+      <button class="hover:text-white">✉</button>
+
+      <!-- Account -->
+      <a href="signup.html" 
+class="ml-2 px-4 py-1.5 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition">
+  Sign in
+</a>
+
+
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="max-w-[1400px] mx-auto px-6 py-6 grid grid-cols-12 gap-6">
+
+<!-- SIDEBAR -->
+<aside class="col-span-12 md:col-span-2 glass p-4 space-y-2 text-sm">
+  <div class="accent text-white px-3 py-2 rounded-md">Dashboard</div>
+  <div class="px-3 py-2 hover:bg-white/5 rounded-md cursor-pointer" onclick="window.location.href='prediction.html'">Go to Predict</div>
+  <div class="px-3 py-2 hover:bg-white/5 rounded-md cursor-pointer">Insights</div>
+  <div class="px-3 py-2 hover:bg-white/5 rounded-md cursor-pointer">News</div>
+</aside>
+
+<!-- CONTENT -->
+<main class="col-span-12 md:col-span-10 space-y-6">
+
+<!-- MARKET OVERVIEW -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+  <div class="glass p-3 text-center">
+    <div class="text-xs text-gray-400">NIFTY 50</div>
+    <div class="font-bold text-green-400">+0.82%</div>
+  </div>
+  <div class="glass p-3 text-center">
+    <div class="text-xs text-gray-400">SENSEX</div>
+    <div class="font-bold text-red-400">-0.21%</div>
+  </div>
+  <div class="glass p-3 text-center">
+    <div class="text-xs text-gray-400">NASDAQ</div>
+    <div class="font-bold text-green-400">+1.12%</div>
+  </div>
+  <div class="glass p-3 text-center">
+    <div class="text-xs text-gray-400">BTC</div>
+    <div class="font-bold text-green-400">$62,340</div>
+  </div>
+  <div class="glass p-3 text-center">
+    <div class="text-xs text-gray-400">Market Mood</div>
+    <div class="font-bold text-yellow-400">Neutral</div>
+  </div>
+</div>
+
+<!-- KPI CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+  <div class="glass p-4">
+    <div class="text-xs text-gray-400">Portfolio Value</div>
+    <div class="text-2xl font-bold">$150,240</div>
+  </div>
+  <div class="glass p-4">
+    <div class="text-xs text-gray-400">Today P&L</div>
+    <div class="text-2xl font-bold text-green-400">+ $2,340</div>
+  </div>
+  <div class="glass p-4">
+    <div class="text-xs text-gray-400">AI Trend</div>
+    <div class="text-xl font-semibold text-green-400">Bullish 📈</div>
+  </div>
+  <div class="glass p-4">
+    <div class="text-xs text-gray-400">AI Confidence</div>
+    <div class="text-2xl font-bold">84%</div>
+  </div>
+</div>
+
+<!-- CHART + AI -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 glass p-5">
+    <div class="flex justify-between mb-3">
+      <h2 class="font-semibold text-lg">RELIANCE.NS</h2>
+      <div class="text-xs text-gray-400">1D · 1W · 1M · 1Y</div>
+    </div>
+    <canvas id="priceChart" height="140"></canvas>
+  </div>
+
+  <div class="glass p-5 space-y-4">
+    <h3 class="font-semibold text-lg">AI Prediction Engine</h3>
+    <div class="text-sm text-gray-300">
+      AI detected bullish momentum using RSI, MACD & Volume analysis.
+    </div>
+    <div>
+      <div class="text-xs text-gray-400 mb-1">Confidence</div>
+      <div class="w-full bg-white/10 rounded-full h-2">
+        <div class="accent h-2 rounded-full w-[84%]"></div>
+      </div>
+    </div>
+    <div class="text-sm">
+      Expected Move: <span class="text-green-400 font-semibold">+3.4%</span>
+    </div>
+    <button class="accent w-full py-2 rounded-lg font-semibold text-sm">
+      View Full Analysis
+    </button>
+
+    <!-- ✅ Go to Predict Button -->
+    <button onclick="window.location.href='prediction.html'" class="btn-accent w-full mt-4">
+      Go to Predict
+    </button>
+  </div>
+</div>
+
+<!-- HOLDINGS -->
+<div class="glass p-5">
+  <h3 class="font-semibold text-lg mb-4">Holdings</h3>
+  <table class="w-full text-sm">
+    <thead class="text-gray-400 border-b border-white/10">
+      <tr>
+        <th class="text-left py-2">Stock</th>
+        <th>Qty</th>
+        <th>Avg</th>
+        <th>LTP</th>
+        <th>P&L</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b border-white/5 hover:bg-white/5">
+        <td class="py-2">AAPL</td>
+        <td class="text-center">16</td>
+        <td class="text-center">$165</td>
+        <td class="text-center">$182</td>
+        <td class="text-center text-green-400">+ $272</td>
+      </tr>
+      <tr class="hover:bg-white/5">
+        <td class="py-2">TSLA</td>
+        <td class="text-center">8</td>
+        <td class="text-center">$241</td>
+        <td class="text-center">$230</td>
+        <td class="text-center text-red-400">- $88</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- AI ALERTS -->
+<div class="glass p-5">
+  <h3 class="font-semibold text-lg mb-3">AI Alerts & Signals</h3>
+  <ul class="space-y-2 text-sm">
+    <li>🔔 AAPL breakout detected</li>
+    <li>⚠️ TSLA high volatility expected</li>
+    <li>🤖 NVDA bullish divergence forming</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<footer class="glass p-6 text-sm text-gray-400 space-y-2">
+  <div class="font-semibold text-white">StockVision — AI Stock Market Prediction</div>
+  <p>Predictions are AI-generated for educational use only. Market investments involve risk.</p>
+  <div class="flex gap-6 text-xs">
+    <span>About</span><span>Disclaimer</span><span>Contact</span><span>GitHub</span>
+  </div>
+  <div class="text-xs">© 2025 StockVision AI</div>
+</footer>
+
+</main>
+</div>
+
+<script>
+new Chart(document.getElementById('priceChart'),{
+  type:'line',
+  data:{
+    labels:['Mon','Tue','Wed','Thu','Fri'],
+    datasets:[{
+      data:[2450,2480,2460,2500,2530],
+      borderColor:'#7c3aed',
+      backgroundColor:'rgba(124,58,237,.2)',
+      tension:.4,
+      fill:true,
+      pointRadius:0
+    }]
+  },
+  options:{
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:'#9ca3af'},grid:{display:false}},
+      y:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.05)'}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>
