@@ -45,6 +45,48 @@ body{
 </head>
 
 <body>
+  <h2 id="welcome" class="text-xl font-semibold text-white"></h2>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const sb = supabase.createClient(
+  "https://txatycglzttpaafymdzq.supabase.co",
+  "sb_publishable_bCGpyG5csL97ZWMw7K3u-w_QzqwS7jZ"
+);
+
+async function protectPage(){
+
+  // check session
+  const { data } = await sb.auth.getUser();
+
+  // if NO USER → force login page
+  if(!data.user){
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Fetch username
+  const { data: profile } = await sb
+    .from("profiles")
+    .select("username")
+    .eq("id", data.user.id)
+    .single();
+
+  // Show greeting
+  document.getElementById("welcome").innerText =
+    "Welcome, " + (profile?.username || "User") + " 👋";
+}
+
+// Logout
+async function logout(){
+  await sb.auth.signOut();
+  window.location.href = "login.html";
+}
+
+protectPage();
+</script>
+
 
 <!-- YAHOO FINANCE STYLE HEADER -->
 <header class="sticky top-0 z-50 bg-[#0f172a] border-b border-white/5">
@@ -96,10 +138,11 @@ body{
       <button class="hover:text-white">✉</button>
 
       <!-- Account -->
-      <button class="ml-2 px-4 py-1.5 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition">
-        Sign in
-      </button>
-    </div>
+      <a href="signup.html" 
+class="ml-2 px-4 py-1.5 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition">
+  Sign in
+</a>
+
 
   </div>
 </header>

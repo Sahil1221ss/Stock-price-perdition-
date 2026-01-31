@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup | StockVision</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="header">
+    <img src="assets/logo.png" alt="StockVision Logo">
+    <div class="brand-title">StockVision</div>
+    <div class="brand-tagline">Smarter Insights. Stronger Decisions</div>
+  </div>
+
+  <p id="msg"></p>
+
+  <input id="username" type="text" placeholder="Username">
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Create password">
+
+  <!-- STEP 1 -->
+  <button onclick="sendOTP()">Send OTP</button>
+
+  <!-- STEP 2 -->
+  <div id="otpSection" style="display:none;">
+    <input id="otpInput" placeholder="Enter OTP">
+    <button id="verifyBtn" onclick="verifyEmailOTP()">Verify OTP</button>
+  </div>
+
+  <!-- LOGIN LINK -->
+  <div class="link">
+    Already have an account?
+    <a href="login.html">Login</a>
+  </div>
+
+</div>
+
+<script>
+console.log("Signup JS loaded");
+
+const sb = supabase.createClient(
+  "https://txatycglzttpaafymdzq.supabase.co",
+  "sb_publishable_bCGpyG5csL97ZWMw7K3u-w_QzqwS7jZ"
+);
+
+let userData = {};
+let signupCompleted = false;
+
+function showMsg(msg, error = false) {
+  const el = document.getElementById("msg");
+  el.innerText = msg;
+  el.style.color = error ? "red" : "lightgreen";
+}
+
+/* STRONG PASSWORD CHECK */
+function isStrongPassword(password) {
+  const minLength = password.length >= 8;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasSymbol = /[^A-Za-z0-9]/.test(password);
+  const hasTwoNumbers = (password.match(/[0-9]/g) || []).length >= 2;
+  return minLength && hasUpper && hasSymbol && hasTwoNumbers;
+}
+
+/* ================= SEND OTP ================= */
+async function sendOTP() {
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!username || !email || !password) {
+    return showMsg("Fill all fields ❌", true);
+  }
+
+  if (!isStrongPassword(password)) {
+    return showMsg(
+      "Password must be 8+ chars, 1 uppercase, 1 symbol & 2 numbers",
+      true
+    );
+  }
+
+  userData = { username, email, password };
+
+  const res = await fetch("http://127.0.0.1:5000/send-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!res.ok) {
+    return showMsg("Failed to send OTP ❌", true);
+  }
+
+  document.getElementById("otpSection").style.display = "block";
+  showMsg("OTP sent to email ✅");
+}
+
+/* ================= VERIFY OTP ================= */
+async function verifyEmailOTP() {
+  if (signupCompleted) {
+    return showMsg("Signup already completed ✅");
+  }
+
+  const otp = document.getElementById("otpInput").value.trim();
+  if (!otp) return showMsg("Enter OTP ❌", true);
+
+  const res = await fetch("http://127.0.0.1:5000/verify-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: userData.email, otp }),
+  });
+
+  const data = await res.json();
+
+  if (!data.verified) {
+    return showMsg("Invalid OTP ❌", true);
+  }
+
+  // Disable verify button
+  const btn = document.getElementById("verifyBtn");
+  btn.disabled = true;
+  btn.innerText = "Verified ✔";
+
+  /* SUPABASE SIGNUP */
+  const { data: signupData, error } = await sb.auth.signUp({
+    email: userData.email,
+    password: userData.password,
+    options: {
+      emailRedirectTo: "http://127.0.0.1:5500/Frontend/login.html"
+    }
+  });
+
+  if (error) {
+    return showMsg(error.message, true);
+  }
+
+  /* INSERT PROFILE */
+  if (signupData?.user) {
+    await sb.from("profiles").insert({
+      id: signupData.user.id,
+      username: userData.username,
+      email: userData.email
+    });
+  }
+
+  signupCompleted = true;
+  showMsg("OTP verified! Check your email to confirm signup 📩");
+}
+</script>
+
+</body>
+</html>
