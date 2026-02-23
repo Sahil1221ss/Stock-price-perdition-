@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | StockVision</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="header">
+    <img src="assets/logo.png" alt="StockVision Logo">
+    <div class="brand-title">StockVision</div>
+    <div class="brand-tagline">Vision That Moves Markets</div>
+  </div>
+
+  <p id="msg"></p>
+
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <div class="link">
+    <a href="forgot-password.html">Forgot password?</a>
+  </div>
+
+  <div class="link">
+    Don’t have an account? <a href="signup.html">Signup</a>
+  </div>
+
+</div>
+
+<script>
+const sb = supabase.createClient(
+  "https://txatycglzttpaafymdzq.supabase.co",
+  "sb_publishable_bCGpyG5csL97ZWMw7K3u-w_QzqwS7jZ"
+);
+
+/* Show message */
+function showMsg(msg, error = false) {
+  const el = document.getElementById("msg");
+  el.innerText = msg;
+  el.style.color = error ? "red" : "lightgreen";
+}
+
+/* LOGIN */
+const { data, error } = await sb.auth.signInWithPassword({
+  email,
+  password
+});
+
+if(error){
+  if(error.message.toLowerCase().includes("confirm")){
+    return showMsg("Please confirm your email before logging in 📩", true);
+  }
+  return showMsg(error.message, true);
+}
+
+// ===== STORE USER INFO =====
+localStorage.setItem("sv_email", data.user.email);
+localStorage.setItem("sv_user_id", data.user.id);
+
+// Get username from profiles table
+const { data: profile } = await sb
+  .from("profiles")
+  .select("username")
+  .eq("id", data.user.id)
+  .single();
+
+if(profile){
+  localStorage.setItem("sv_username", profile.username);
+}
+
+showMsg("Login successful ✅ Redirecting...");
+
+setTimeout(() => {
+  window.location.href = "index.html";
+}, 800);
+</script>
+
+</body>
+</html>
